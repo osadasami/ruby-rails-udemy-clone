@@ -69,3 +69,5 @@ end
 
 
 gem "slim-rails", "~> 3.4"
+
+gem "simple_form", "~> 5.1"
