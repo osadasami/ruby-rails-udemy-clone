@@ -1,9 +1,9 @@
 doctype html
 html
   head
-    title
-      | RubyRailsUdemyClone
-    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    title RubyRailsUdemyClone
+    meta charset="UTF-8"/
+    meta name="viewport" content="width=device-width, initial-scale=1.0"/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
@@ -13,3 +13,4 @@ html
     = render partial: 'navbar'
 
     = yield
+

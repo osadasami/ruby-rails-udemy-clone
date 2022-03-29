@@ -4,9 +4,10 @@ h1 Courses
 
 = link_to "New course", new_course_path
 
-#courses
+div(id="courses" class="grid grid-cols-3 gap-4")
   - @courses.each do |course|
-    == render course
-    p
-      = link_to "Show this course", course
+    div(class="p-4 bg-white border rounded")
+      == render course
+      p
+        = link_to "Show this course", course
 
