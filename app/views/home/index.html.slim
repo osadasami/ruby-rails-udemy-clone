@@ -1,4 +1,27 @@
-h1
-  | Home#index
-p
-  | Find me in app/views/home/index.html.erb
+h1 What do you want to learn?
+
+h2 class="text-3xl" Popular courses
+
+div class="grid gap-4 md:grid-cols-3"
+  - @courses.each do |course|
+    div(class="p-4 bg-white border rounded space-y-8")
+      == render course
+
+div class="grid gap-4 grid-cols-3"
+  div class="p-4 border rounded" Learn in-demand skills with over #{Course.count} video courses
+  div class="p-4 border rounded" Choose courses taught by #{Course.distinct.count(:user_id)} real-world experts
+  div class="p-4 border rounded" Learn at your own pace, with lifetime access on mobile and desktop
+
+h2 class="text-3xl" Top rated courses
+
+div class="grid gap-4 md:grid-cols-3"
+  - @courses.each do |course|
+    div(class="p-4 bg-white border rounded space-y-8")
+      == render course
+
+h2 class="text-3xl" Latest courses
+
+div class="grid gap-4 md:grid-cols-3"
+  - @latest_courses.each do |course|
+    div(class="p-4 bg-white border rounded space-y-8")
+      == render course

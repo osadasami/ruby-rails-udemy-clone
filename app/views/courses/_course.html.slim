@@ -1,6 +1,8 @@
-div id="#{dom_id course}"
-  h2 = course.title
-  = course.user.email
+div id="#{dom_id course}" class="space-y-2"
+  h2 class="text-2xl" = course.title
+  div class="flex justify-between"
+    div= course.user.email
+    div= course.created_at.strftime('%Y/%m/%d')
   div(class="prose")
     == course.description
 
