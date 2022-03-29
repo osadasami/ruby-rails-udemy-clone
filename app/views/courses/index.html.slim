@@ -2,10 +2,11 @@ p style="color: green" = notice
 
 h1 Courses
 
+= link_to "New course", new_course_path
+
 #courses
   - @courses.each do |course|
     == render course
     p
       = link_to "Show this course", course
 
-= link_to "New course", new_course_path
