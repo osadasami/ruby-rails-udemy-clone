@@ -73,3 +73,5 @@ gem "slim-rails", "~> 3.4"
 gem "simple_form", "~> 5.1"
 
 gem "faker", "~> 2.20"
+
+gem "devise", "~> 4.8"
