@@ -4,6 +4,11 @@ div id="#{dom_id course}" class="space-y-2"
   div class="flex justify-between"
     div= course.user.email
     div= course.created_at.strftime('%Y/%m/%d')
+  div
+    div= course.description_short
+    div= course.language
+    div= course.level
+    div= number_to_currency(course.price)
   div(class="prose")
     == course.description
 
