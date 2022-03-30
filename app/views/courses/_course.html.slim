@@ -1,5 +1,6 @@
 div id="#{dom_id course}" class="space-y-2"
-  h2 class="text-2xl" = course.title
+  h2 class="text-2xl"
+    = link_to course.title, course
   div class="flex justify-between"
     div= course.user.email
     div= course.created_at.strftime('%Y/%m/%d')
