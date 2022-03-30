@@ -5,8 +5,8 @@
   .form-inputs
     = f.input :title
     = f.input :description_short
-    = f.input :language, collection: ['English', 'Chinese', 'Russian']
-    = f.input :level, collection: ['Beginner', 'Intermediate', 'Advanced']
+    = f.input :language, collection: Course::LANGUAGES
+    = f.input :level, collection: Course::LEVELS
     = f.input :price, input_html: {min: 0}
     = f.rich_text_area :description
 

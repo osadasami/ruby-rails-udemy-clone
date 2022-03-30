@@ -10,4 +10,7 @@ class Course < ApplicationRecord
 	has_rich_text :description
 	belongs_to :user
 	friendly_id :title, use: :slugged
+
+	LANGUAGES = ['English', 'Chinese', 'Russian', 'Spanish', 'Japanese']
+	LEVELS = ['Beginner', 'Intermediate', 'Advanced']
 end

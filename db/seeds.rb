@@ -13,8 +13,8 @@ end
 		description_short: Faker::Lorem.paragraph(sentence_count: 3),
 		description: Faker::Lorem.paragraph(sentence_count: 10),
 		user: User.all.sample,
-		language: ['English', 'Chinese', 'Russian'].sample,
-		level: ['Beginner', 'Intermediate', 'Advanced'].sample,
+		language: Course::LANGUAGES.sample,
+		level: Course::LEVELS.sample,
 		price: Faker::Number.between(from: 10, to: 250),
 	)
 end
