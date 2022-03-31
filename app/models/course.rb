@@ -1,5 +1,7 @@
 class Course < ApplicationRecord
 	extend FriendlyId
+	include PublicActivity::Model
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
 
 	validates :title, presence: true
 	validates :description_short, presence: true
