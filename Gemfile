@@ -81,3 +81,6 @@ gem "friendly_id", "~> 5.4"
 gem "ransack", "~> 2.6"
 
 gem "public_activity", github: 'ledermann/public_activity', branch: 'rails-7'
+gem "rolify", "~> 6.0"
+
+gem "pundit", "~> 2.2"

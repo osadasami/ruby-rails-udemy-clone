@@ -23,3 +23,6 @@ table
         td= user.last_sign_in_at
         td= user.current_sign_in_ip
         td= user.last_sign_in_ip
+        td
+          - user.roles.each do |role|
+            span= role.name
