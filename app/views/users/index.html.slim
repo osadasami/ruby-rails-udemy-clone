@@ -12,6 +12,8 @@ table
     th= sort_link(@q, :last_sign_in_at)
     th current_sign_in_ip
     th last_sign_in_ip
+    th Email confirmed?
+    th
   tbody
     - @users.each do |user|
       tr
@@ -23,6 +25,8 @@ table
         td= user.last_sign_in_at
         td= user.current_sign_in_ip
         td= user.last_sign_in_ip
+        td= user.confirmed_at.present?
         td
           - user.roles.each do |role|
             span= role.name
+        td= link_to 'Edit roles', edit_user_path(user)
