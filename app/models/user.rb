@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable, :confirmable
 
+  validate :must_have_a_role, on: :update
+
   has_many :courses
 
   after_create :assign_default_role
@@ -22,5 +24,11 @@ class User < ApplicationRecord
       self.add_role(:teacher)
       self.add_role(:student)
     end
+  end
+
+  private
+
+  def must_have_a_role
+    errors.add(:roles, 'must have at least one role') unless roles.any?
   end
 end
