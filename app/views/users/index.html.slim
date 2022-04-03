@@ -13,6 +13,7 @@ table
     th current_sign_in_ip
     th last_sign_in_ip
     th Email confirmed?
+    th Online?
     th
   tbody
     - @users.each do |user|
@@ -26,6 +27,7 @@ table
         td= user.current_sign_in_ip
         td= user.last_sign_in_ip
         td= user.confirmed_at.present?
+        td= user.online?
         td
           - user.roles.each do |role|
             span= role.name
