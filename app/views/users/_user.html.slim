@@ -1,9 +1,0 @@
-div
-	div= user.email
-	div Signed up #{time_ago_in_words(user.created_at)} ago
-	div sign_in_count #{user.sign_in_count}
-	div current_sign_in_at #{user.current_sign_in_at}
-	div last_sign_in_at #{user.last_sign_in_at}
-	div current_sign_in_ip #{user.current_sign_in_ip}
-	div last_sign_in_ip #{user.last_sign_in_ip}
-	div Email confirmed? #{user.confirmed_at.present?}

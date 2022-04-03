@@ -18,7 +18,7 @@ table
     - @users.each do |user|
       tr
         td= user.id
-        td= user.email
+        td= link_to user.email, user
         td= user.created_at
         td= user.sign_in_count
         td= user.current_sign_in_at
