@@ -3,6 +3,7 @@ p style="color: green" = notice
 == render @course
 
 div
+  => link_to "Add lessons", new_course_lesson_path(@course) if policy(@course).edit?
   => link_to "Edit this course", edit_course_path(@course) if policy(@course).edit?
   '|
   =< link_to "Back to courses", courses_path
@@ -13,4 +14,4 @@ h2 Lessons (#{@course.lessons.count})
 
 ul
   - @course.lessons.each do |lesson|
-    li= link_to lesson.title, lesson
+    li= link_to lesson.title, course_lesson_path(@course, lesson)
