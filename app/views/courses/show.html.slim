@@ -8,3 +8,9 @@ div
   =< link_to "Back to courses", courses_path
 
   = button_to "Destroy this course", @course, method: :delete if policy(@course).destroy?
+
+h2 Lessons (#{@course.lessons.count})
+
+ul
+  - @course.lessons.each do |lesson|
+    li= link_to lesson.title, lesson

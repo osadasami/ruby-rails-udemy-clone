@@ -1,0 +1,11 @@
+p style="color: green" = notice
+
+h1 Lessons
+
+#lessons
+  - @lessons.each do |lesson|
+    == render lesson
+    p
+      = link_to "Show this lesson", lesson
+
+= link_to "New lesson", new_lesson_path
