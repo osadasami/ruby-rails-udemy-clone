@@ -1,5 +1,7 @@
 p style="color: green" = notice
 
+div #{link_to 'Courses', courses_path} / #{link_to @lesson.course.title, @lesson.course}
+
 == render @lesson
 
 div
