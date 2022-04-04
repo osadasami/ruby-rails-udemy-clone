@@ -8,3 +8,6 @@ div id="#{dom_id lesson}"
   p
     strong Course:
     =< lesson.course_id
+  p
+    strong Author:
+    =< lesson.course.user.email
