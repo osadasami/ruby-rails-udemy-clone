@@ -85,3 +85,5 @@ gem "public_activity", github: 'ledermann/public_activity', branch: 'rails-7'
 gem "rolify", "~> 6.0"
 
 gem "pundit", "~> 2.2"
+
+gem "pagy", "~> 5.10"

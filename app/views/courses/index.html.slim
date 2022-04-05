@@ -2,6 +2,8 @@ p style="color: green" = notice
 
 h1 Courses
 
+== pagy_nav(@pagy)
+
 = search_form_for @q do |f|
   = f.label :title
   = f.search_field :title_cont, placeholder: 'Title'
@@ -26,4 +28,5 @@ div(id="courses" class="grid md:grid-cols-3 gap-4")
         = link_to "Show", course, class: 'p-2 bg-blue-50 border border-blue-300 text-blue-400 rounded'
         = link_to "Edit", edit_course_path(course), class: 'p-2 bg-orange-50 border border-orange-300 text-orange-400 rounded' if policy(course).edit?
         = button_to "Delete", course, method: :delete, class: 'p-2 bg-red-50 border border-red-300 text-red-400 rounded' if policy(course).destroy?
-
+        
+== pagy_nav(@pagy)

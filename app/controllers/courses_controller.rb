@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
   def index
     @q = Course.ransack(params[:q])
     @courses = @q.result.includes(:user).with_all_rich_text
+    @pagy, @courses = pagy(@courses)
   end
 
   # GET /courses/1 or /courses/1.json

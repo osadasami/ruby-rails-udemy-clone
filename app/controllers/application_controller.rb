@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 	include PublicActivity::StoreController
+	include Pagy::Backend
 
 	include Pundit::Authorization
 	protect_from_forgery
