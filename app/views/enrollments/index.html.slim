@@ -1,0 +1,11 @@
+p style="color: green" = notice
+
+h1 Enrollments
+
+#enrollments
+  - @enrollments.each do |enrollment|
+    == render enrollment
+    p
+      = link_to "Show this enrollment", enrollment
+
+= link_to "New enrollment", new_enrollment_path

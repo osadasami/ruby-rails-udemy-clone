@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validate :must_have_a_role, on: :update
 
   has_many :courses
+  has_many :enrollments
 
   extend FriendlyId
   friendly_id :email, use: :slugged
@@ -31,6 +32,10 @@ class User < ApplicationRecord
 
   def online?
     updated_at > 3.minutes.ago
+  end
+
+  def to_s
+    email
   end
 
   private

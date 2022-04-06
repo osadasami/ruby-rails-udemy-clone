@@ -1,0 +1,16 @@
+div id="#{dom_id enrollment}"
+  p
+    strong Course:
+    =< enrollment.course_id
+  p
+    strong User:
+    =< enrollment.user_id
+  p
+    strong Rating:
+    =< enrollment.rating
+  p
+    strong Review:
+    =< enrollment.review
+  p
+    strong Price:
+    =< number_to_currency(enrollment.price)
