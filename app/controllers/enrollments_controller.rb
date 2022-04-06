@@ -12,7 +12,15 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments/new
   def new
-    @enrollment = Enrollment.new
+    course = Course.friendly.find(params[:course])
+
+    if course.price == 0
+      current_user.buy_course(course)
+      redirect_to course_path(course), notice: 'You are enrolled!'
+    else
+      flash[:alert] = 'Paid courses are not available yet.'
+      redirect_to courses_path
+    end
   end
 
   # GET /enrollments/1/edit

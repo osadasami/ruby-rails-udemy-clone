@@ -17,4 +17,8 @@ class Course < ApplicationRecord
 
 	LANGUAGES = ['English', 'Chinese', 'Russian', 'Spanish', 'Japanese']
 	LEVELS = ['Beginner', 'Intermediate', 'Advanced']
+
+	def bought_by?(user)
+		enrollments.where(user: user, course: self).exists?
+	end
 end
