@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     authorize current_user
     @q = User.ransack(params[:q])
     @users = @q.result(distinct: true).order(created_at: :desc)
+    @pagy, @users = pagy(@users)
   end
 
   def edit

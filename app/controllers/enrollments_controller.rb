@@ -5,6 +5,8 @@ class EnrollmentsController < ApplicationController
   def index
     @enrollments = Enrollment.all
     authorize @enrollments
+
+    @pagy, @enrollments = pagy(@enrollments)
   end
 
   # GET /enrollments/1 or /enrollments/1.json

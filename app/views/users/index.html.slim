@@ -2,6 +2,8 @@
   = f.search_field :email_cont, placeholder: 'Email'
   = f.submit
 
+== pagy_nav(@pagy)
+
 table
   thead
     th= sort_link(@q, :id)
@@ -32,3 +34,5 @@ table
           - user.roles.each do |role|
             span= role.name
         td= link_to 'Edit roles', edit_user_path(user)
+
+== pagy_nav(@pagy)
