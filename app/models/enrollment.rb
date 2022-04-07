@@ -7,6 +7,13 @@ class Enrollment < ApplicationRecord
   validates_uniqueness_of :course_id, scope: :user_id
   validate :cant_subscribe_to_own_course
 
+  extend FriendlyId
+  friendly_id :to_s, use: :slugged
+
+  def to_s
+    "#{user.email}-#{course.title}"
+  end
+
   private
 
   def cant_subscribe_to_own_course
