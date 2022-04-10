@@ -6,26 +6,26 @@ nav(class="flex space-x-2")
     div
       div Admin
       ul
-        li= link_to 'Courses', courses_path
-        li= link_to 'Users', users_path
-        li= link_to 'Activities', activities_path
-        li= link_to 'Enrollments', enrollments_path
+        li= link_to "Courses (#{Course.count})", courses_path
+        li= link_to "Users (#{User.count})", users_path
+        li= link_to "Activities (#{PublicActivity::Activity.count})", activities_path
+        li= link_to "Enrollments (#{Enrollment.count})", enrollments_path
 
   - if current_user && current_user.has_role?(:teacher)
     div
       div Teach
       ul
         li= link_to 'New Course', new_course_path
-        li= link_to 'My Activity', activity_path
-        li= link_to 'My Courses', my_courses_path
-        li= link_to 'My Students', my_enrollments_path
+        li= link_to "My Activity", activity_path
+        li= link_to "My Courses (#{current_user.courses.count})", my_courses_path
+        li= link_to "My Students (#{current_user.enrollments.count})", my_enrollments_path
 
   - if current_user && current_user.has_role?(:student)
     div
       div Study
       ul
-        li= link_to 'Purchased Course', purchased_courses_path
-        li= link_to 'Pending Review', pending_review_courses_path
+        li= link_to "Purchased Course", purchased_courses_path
+        li= link_to "Pending Review (#{current_user.enrollments.pending_review.count})", pending_review_courses_path
 
 
 
