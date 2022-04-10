@@ -21,4 +21,8 @@ class Course < ApplicationRecord
 	def bought_by?(user)
 		enrollments.where(user: user, course: self).exists?
 	end
+
+	def update_rating
+		update(average_rating: enrollments.average(:rating)&.round(1).to_f)
+	end
 end

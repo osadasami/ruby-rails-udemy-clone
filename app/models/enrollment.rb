@@ -15,6 +15,15 @@ class Enrollment < ApplicationRecord
   extend FriendlyId
   friendly_id :to_s, use: :slugged
 
+  after_save :update_rating
+  after_destroy :update_rating
+
+  def update_rating
+    return if rating.zero?
+
+    course.update_rating
+  end
+
   def to_s
     "#{user.email}-#{course.title}"
   end
