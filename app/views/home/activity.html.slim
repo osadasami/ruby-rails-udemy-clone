@@ -1,0 +1,13 @@
+h1 Activities
+
+table
+	thead
+		th Entity
+		th Action
+		th Parameters
+	tbody
+		- @activities.each do |activity|
+			tr
+				td= activity.trackable_type
+				td= activity.key
+				td= activity.parameters

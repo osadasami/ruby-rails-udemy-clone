@@ -8,6 +8,16 @@ class EnrollmentsController < ApplicationController
     authorize @enrollments
   end
 
+  def my
+    @q = Enrollment.ransack(params[:q])
+    @pagy, @enrollments = pagy(
+      @q.result
+        .includes(:user)
+        .joins(:course)
+          .where(course: {user: current_user}))
+    render :index
+  end
+
   # GET /enrollments/1 or /enrollments/1.json
   def show
   end

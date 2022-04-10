@@ -4,7 +4,7 @@ h1 Courses
 
 == pagy_nav(@pagy)
 
-= search_form_for @q do |f|
+= search_form_for @q, url: request.path do |f|
   = f.label :title
   = f.search_field :title_cont, placeholder: 'Title'
   = f.label :description

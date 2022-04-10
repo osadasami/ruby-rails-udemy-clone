@@ -1,9 +1,36 @@
+
 nav(class="flex space-x-2")
   = link_to 'Home', root_path
-  = link_to 'Courses', courses_path
-  = link_to 'Users', users_path if current_user && policy(current_user).index?
-  = link_to 'Activities', home_activities_path
-  = link_to 'Enrollments', enrollments_path
+
+  - if current_user && current_user.has_role?(:admin)
+    div
+      div Admin
+      ul
+        li= link_to 'Courses', courses_path
+        li= link_to 'Users', users_path
+        li= link_to 'Activities', activities_path
+        li= link_to 'Enrollments', enrollments_path
+
+  - if current_user && current_user.has_role?(:teacher)
+    div
+      div Teach
+      ul
+        li= link_to 'New Course', new_course_path
+        li= link_to 'My Activity', activity_path
+        li= link_to 'My Courses', my_courses_path
+        li= link_to 'My Students', my_enrollments_path
+
+  - if current_user && current_user.has_role?(:student)
+    div
+      div Study
+      ul
+        li= link_to 'Purchased Course', purchased_courses_path
+        li= link_to 'Pending Review', pending_review_courses_path
+
+
+
+
+
 
   - if current_user
     = link_to current_user.email, edit_user_registration_path

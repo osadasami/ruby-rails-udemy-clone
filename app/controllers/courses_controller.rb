@@ -8,6 +8,40 @@ class CoursesController < ApplicationController
     @pagy, @courses = pagy(@courses)
   end
 
+  def purchased
+    @q = Course.ransack(params[:q])
+    @courses = @q.result
+      .includes(:user)
+      .joins(:enrollments)
+        .where(enrollments: {user: current_user})
+      .with_all_rich_text
+    @pagy, @courses = pagy(@courses)
+
+    render :index
+  end
+
+  def pending_review
+    @q = Course.ransack(params[:q])
+    @courses = @q.result
+      .includes(:user)
+      .joins(:enrollments)
+        .merge(
+          Enrollment.pending_review.where(user: current_user)
+        )
+      .with_all_rich_text
+    @pagy, @courses = pagy(@courses)
+
+    render :index
+  end
+
+  def my
+    @q = Course.ransack(params[:q])
+    @courses = @q.result.includes(:user).with_all_rich_text.where(user: current_user)
+    @pagy, @courses = pagy(@courses)
+
+    render :index
+  end
+
   # GET /courses/1 or /courses/1.json
   def show
   end

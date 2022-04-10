@@ -24,7 +24,7 @@ module ApplicationHelper
 
     user_enrollment = course.enrollments.find_by(user: user)
 
-    if user_enrollment.review.empty?
+    if user_enrollment&.review&.empty?
       link_to 'Review', edit_enrollment_path(user_enrollment)
     else
       link_to 'Your review', enrollment_path(user_enrollment)
