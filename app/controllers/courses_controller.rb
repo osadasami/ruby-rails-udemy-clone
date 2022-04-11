@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[show edit update destroy]
 
   # GET /courses or /courses.json
   def index
@@ -11,10 +13,10 @@ class CoursesController < ApplicationController
   def purchased
     @q = Course.ransack(params[:q])
     @courses = @q.result
-      .includes(:user)
-      .joins(:enrollments)
-        .where(enrollments: {user: current_user})
-      .with_all_rich_text
+                 .includes(:user)
+                 .joins(:enrollments)
+                 .where(enrollments: { user: current_user })
+                 .with_all_rich_text
     @pagy, @courses = pagy(@courses)
 
     render :index
@@ -23,12 +25,12 @@ class CoursesController < ApplicationController
   def pending_review
     @q = Course.ransack(params[:q])
     @courses = @q.result
-      .includes(:user)
-      .joins(:enrollments)
-        .merge(
-          Enrollment.pending_review.where(user: current_user)
-        )
-      .with_all_rich_text
+                 .includes(:user)
+                 .joins(:enrollments)
+                 .merge(
+                   Enrollment.pending_review.where(user: current_user)
+                 )
+                 .with_all_rich_text
     @pagy, @courses = pagy(@courses)
 
     render :index
@@ -43,8 +45,7 @@ class CoursesController < ApplicationController
   end
 
   # GET /courses/1 or /courses/1.json
-  def show
-  end
+  def show; end
 
   # GET /courses/new
   def new
@@ -65,7 +66,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
+        format.html { redirect_to course_url(@course), notice: 'Course was successfully created.' }
         format.json { render :show, status: :created, location: @course }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -79,7 +80,7 @@ class CoursesController < ApplicationController
     authorize @course
     respond_to do |format|
       if @course.update(course_params)
-        format.html { redirect_to course_url(@course), notice: "Course was successfully updated." }
+        format.html { redirect_to course_url(@course), notice: 'Course was successfully updated.' }
         format.json { render :show, status: :ok, location: @course }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -94,19 +95,20 @@ class CoursesController < ApplicationController
     @course.destroy
 
     respond_to do |format|
-      format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
+      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.friendly.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def course_params
-      params.require(:course).permit(:title, :description, :description_short, :language, :level, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.friendly.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def course_params
+    params.require(:course).permit(:title, :description, :description_short, :language, :level, :price)
+  end
 end

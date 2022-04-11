@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
@@ -20,14 +22,9 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    if User.count == 1
-      self.add_role(:admin)
-      self.add_role(:teacher)
-      self.add_role(:student)
-    else
-      self.add_role(:teacher)
-      self.add_role(:student)
-    end
+    add_role(:admin) if User.count == 1
+    add_role(:teacher)
+    add_role(:student)
   end
 
   def online?

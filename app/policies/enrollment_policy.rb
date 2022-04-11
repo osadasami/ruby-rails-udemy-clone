@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EnrollmentPolicy < ApplicationPolicy
   def index?
     @user.has_role?(:admin)

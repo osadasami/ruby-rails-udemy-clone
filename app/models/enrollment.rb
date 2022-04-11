@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Enrollment < ApplicationRecord
   belongs_to :course
   belongs_to :user
@@ -32,7 +34,7 @@ class Enrollment < ApplicationRecord
 
   def cant_subscribe_to_own_course
     if new_record? && user_id.present? && user_id == course.user_id
-      errors.add(:base, "You can not subscribe to your own course")
+      errors.add(:base, 'You can not subscribe to your own course')
     end
   end
 end

@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
-	include PublicActivity::StoreController
-	include Pagy::Backend
+  include PublicActivity::StoreController
+  include Pagy::Backend
 
-	include Pundit::Authorization
-	protect_from_forgery
-	rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  include Pundit::Authorization
+  protect_from_forgery
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-	before_action :authenticate_user!
-	after_action :update_user_online
+  before_action :authenticate_user!
+  after_action :update_user_online
 
-	private
+  private
 
-	def user_not_authorized
-		flash[:alert] = 'You are not authorized to perform this action.'
-		redirect_to(request.referrer || root_path)
-	end
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+    redirect_to(request.referrer || root_path)
+  end
 
-	def update_user_online
-		current_user.try :touch
-	end
+  def update_user_online
+    current_user.try :touch
+  end
 end

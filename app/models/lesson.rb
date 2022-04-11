@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Lesson < ApplicationRecord
   belongs_to :course
   has_rich_text :content
@@ -7,5 +9,5 @@ class Lesson < ApplicationRecord
   friendly_id :title, use: :slugged
 
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller&.current_user || nil }
+  tracked owner: proc { |controller, _model| controller&.current_user || nil }
 end

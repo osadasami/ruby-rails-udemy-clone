@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursePolicy < ApplicationPolicy
   def edit?
     @user.has_role?(:admin) || @record.user == @user

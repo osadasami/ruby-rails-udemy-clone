@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :show]
+  before_action :set_user, only: %i[edit update show]
 
   def index
     authorize current_user
@@ -12,15 +14,13 @@ class UsersController < ApplicationController
     authorize current_user
   end
 
-  def show
-
-  end
+  def show; end
 
   def update
     authorize current_user
 
     if @user.update(user_params)
-      redirect_to users_path, notice: "User roles was successfully updated"
+      redirect_to users_path, notice: 'User roles was successfully updated'
     else
       render :edit, status: :unprocessable_entity
     end
