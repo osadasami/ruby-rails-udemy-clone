@@ -92,3 +92,7 @@ gem 'rolify', '~> 6.0'
 gem 'pundit', '~> 2.2'
 
 gem 'pagy', '~> 5.10'
+
+group :test do
+  gem 'pundit-matchers', '~> 1.7.0'
+end

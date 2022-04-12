@@ -11,6 +11,8 @@ class CoursesController < ApplicationController
   end
 
   def purchased
+    authorize Course
+
     @q = Course.ransack(params[:q])
     @courses = @q.result
                  .includes(:user)
@@ -23,6 +25,8 @@ class CoursesController < ApplicationController
   end
 
   def pending_review
+    authorize Course
+
     @q = Course.ransack(params[:q])
     @courses = @q.result
                  .includes(:user)
@@ -37,6 +41,8 @@ class CoursesController < ApplicationController
   end
 
   def my
+    authorize Course
+
     @q = Course.ransack(params[:q])
     @courses = @q.result.includes(:user).with_all_rich_text.where(user: current_user)
     @pagy, @courses = pagy(@courses)
@@ -45,12 +51,13 @@ class CoursesController < ApplicationController
   end
 
   # GET /courses/1 or /courses/1.json
-  def show; end
+  def show
+  end
 
   # GET /courses/new
   def new
+    authorize Course
     @course = Course.new
-    authorize @course
   end
 
   # GET /courses/1/edit
@@ -60,8 +67,8 @@ class CoursesController < ApplicationController
 
   # POST /courses or /courses.json
   def create
+    authorize Course
     @course = Course.new(course_params)
-    authorize @course
     @course.user = current_user
 
     respond_to do |format|

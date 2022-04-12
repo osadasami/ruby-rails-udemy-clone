@@ -161,6 +161,8 @@ GEM
       nio4r (~> 2.0)
     pundit (2.2.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.7.0)
+      rspec-rails (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -308,6 +310,7 @@ DEPENDENCIES
   public_activity!
   puma (~> 5.0)
   pundit (~> 2.2)
+  pundit-matchers (~> 1.7.0)
   rails (~> 7.0.2, >= 7.0.2.3)
   rails-erd
   ransack (~> 2.6)

@@ -22,8 +22,6 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    add_role(:admin) if User.count == 1
-    add_role(:teacher)
     add_role(:student)
   end
 
