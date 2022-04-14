@@ -14,6 +14,6 @@ RSpec.describe User, type: :model do
   end
 
   it 'has student role after creating' do
-    expect(user.has_role?(:student)).to eq(true)
+    expect(user.has_role?(:student)).to be(true)
   end
 end

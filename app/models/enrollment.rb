@@ -10,7 +10,7 @@ class Enrollment < ApplicationRecord
   validate :cant_subscribe_to_own_course
   validates_presence_of :rating, if: :review?
   validates_presence_of :review, if: :rating?
-  validates :rating, numericality: { only_integer: true, in: 1..5 }
+  validates :rating, numericality: { only_integer: true, in: 1..5 }, if: :review?
 
   scope :pending_review, -> { where(rating: nil, review: ['', nil]) }
 
@@ -21,7 +21,7 @@ class Enrollment < ApplicationRecord
   after_destroy :update_rating
 
   def update_rating
-    return if rating.zero?
+    return unless rating
 
     course.update_rating
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CoursePolicy do
@@ -40,11 +42,13 @@ RSpec.describe CoursePolicy do
 
     context 'my course' do
       let(:record) { Course.create(user: user) }
+
       it { is_expected.to permit_actions(:purchased, :pending_review, :my, :new, :create, :edit, :update, :destroy) }
     end
 
     context 'not my course' do
       let(:record) { Course.create }
+
       it { is_expected.to permit_actions(:purchased, :pending_review, :my, :new, :create) }
       it { is_expected.to forbid_actions(:edit, :update, :destroy) }
     end
