@@ -95,4 +95,5 @@ gem 'pagy', '~> 5.10'
 
 group :test do
   gem 'pundit-matchers', '~> 1.7.0'
+  gem "factory_bot_rails", "~> 6.2"
 end

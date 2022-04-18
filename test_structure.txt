@@ -1,0 +1,84 @@
+Data
+	guest
+	admin
+	teacher
+	student
+	my_enrollments
+	not_my_enrollments
+
+Enrollments
+	index
+		guest
+			it redirects to root path
+		admin
+			it opens page with all enrollments
+		teacher
+			it opens page with my enrollments
+		student
+			it opens page with my enrollments
+	new
+		guest
+			it redirects to root path
+		admin
+			it opens pages to create new enrollment
+		teacher
+			it opens pages to create new enrollment
+		student
+			it opens pages to create new enrollment
+	create
+		guest
+			it redirects to root path
+		admin
+			it creates new enrollment if it is not exist
+			it redirects to new page if enrollment already exists
+			it redirects to new page if course is my
+		teacher
+			it creates new enrollment if it is not exist
+			it redirects to new page if enrollment already exists
+			it redirects to new page if course is my
+		student
+			it creates new enrollment if it is not exist
+			it redirects to new page if enrollment already exists
+			it redirects to new page if course is my
+	show
+		guest
+			it redirects to root path
+		admin
+			it opens page with any enrollment
+		teacher
+			it opens page only with my enrollment
+			it redirects to my enrollments page if enrollment is not mine
+		student
+			it opens page only with my enrollment
+			it redirects to my enrollments page if enrollment is not mine
+	edit
+		guest
+			it redirects to root path
+		admin
+			it opens pages to edit any enrollment
+		teacher
+			it opens pages to edit only my enrollment
+		student
+			it opens pages to edit only my enrollment
+	update
+		guest
+			it redirects to root path
+		admin
+			it updates any enrollment
+		teacher
+			it updates only my enrollment
+			it reidrects to my enrollments page if enrollment is not mine
+		student
+			it updates only my enrollment
+			it redirects to my enrollments page if enrollment is not mine
+	destroy
+		guest
+			it redirects to root path
+		admin
+			it deletes any enrollment
+		teacher
+			it deletes only my enrollment
+			it redirects to my enrollments page if enrollment is not mine
+		student
+			it deletes only my enrollment
+			it redirects to my enrollments page if enrollment is not mine

@@ -17,8 +17,8 @@ nav(class="flex space-x-2")
       ul
         li= link_to 'New Course', new_course_path
         li= link_to "My Activity", activity_path
-        li= link_to "My Courses (#{current_user.courses.count})", my_courses_path
-        li= link_to "My Students (#{current_user.enrollments.count})", my_enrollments_path
+        li= link_to "My Courses (#{current_user.courses.count})", courses_path
+        li= link_to "My Students (#{current_user.enrollments.count})", enrollments_path
 
   - if current_user && current_user.has_role?(:student)
     div

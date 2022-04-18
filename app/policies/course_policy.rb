@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 class CoursePolicy < ApplicationPolicy
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      scope
+        .joins(:enrollments)
+        .where(enrollments: { user: user })
+    end
+
+    private
+
+    attr_reader :user, :scope
+  end
+
   def purchased?
     @user && (
       @user.has_role?(:admin) ||

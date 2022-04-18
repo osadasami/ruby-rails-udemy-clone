@@ -12,14 +12,10 @@ class CoursesController < ApplicationController
   end
 
   def purchased
-    authorize Course
-
     @q = Course.ransack(params[:q])
-    @courses = @q.result
-                 .includes(:user)
-                 .joins(:enrollments)
-                 .where(enrollments: { user: current_user })
-                 .with_all_rich_text
+    @courses = policy_scope(@q.result)
+                .includes(:user)
+                .with_all_rich_text
     @pagy, @courses = pagy(@courses)
 
     render :index
@@ -29,13 +25,14 @@ class CoursesController < ApplicationController
     authorize Course
 
     @q = Course.ransack(params[:q])
-    @courses = @q.result
-                 .includes(:user)
-                 .joins(:enrollments)
-                 .merge(
-                   Enrollment.pending_review.where(user: current_user)
-                 )
-                 .with_all_rich_text
+    @courses = @q
+                .result
+                .includes(:user)
+                .joins(:enrollments)
+                .merge(
+                  Enrollment.pending_review.where(user: current_user)
+                )
+               .with_all_rich_text
     @pagy, @courses = pagy(@courses)
 
     render :index

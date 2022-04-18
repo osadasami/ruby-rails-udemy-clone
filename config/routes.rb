@@ -3,9 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :enrollments do
-    get :my, on: :collection
-  end
+  resources :enrollments
   resources :courses do
     get :purchased, on: :collection
     get :pending_review, on: :collection

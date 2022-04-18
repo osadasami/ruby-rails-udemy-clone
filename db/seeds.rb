@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+User.delete_all
+Course.delete_all
+
 1.upto(10) do |n|
   user = User.create(
     email: "admin#{n}@admin.com",
