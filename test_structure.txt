@@ -7,6 +7,25 @@ Data
 	not_my_enrollments
 
 Enrollments
+	guest
+		index
+			it redirects to login page
+		new
+			it redirects to login page
+		create
+			it redirects to login page
+		show
+			it redirects to login page
+		edit
+			it redirects to login page
+		update
+			it redirects to login page
+		destroy
+			it redirects to login page
+	admin
+	teacher
+	student
+
 	index
 		guest
 			it redirects to root path

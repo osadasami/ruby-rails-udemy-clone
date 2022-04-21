@@ -28,12 +28,12 @@ class EnrollmentsController < ApplicationController
   def new
     course = Course.friendly.find(params[:course])
 
-    if course.price.zero?
-      current_user.buy_course(course)
-      redirect_to course_path(course), notice: 'You are enrolled!'
-    else
-      flash[:alert] = 'Paid courses are not available yet.'
-      redirect_to courses_path
+    if course.bought_by?(current_user)
+      redirect_to course_path(course), notice: 'You are already enrolled'
+    end
+
+    if course.user == current_user
+      redirect_to course_path(course), notice: 'You can not enroll to your own course'
     end
   end
 
@@ -44,17 +44,15 @@ class EnrollmentsController < ApplicationController
 
   # POST /enrollments or /enrollments.json
   def create
-    @enrollment = Enrollment.new(enrollment_params)
-    @enrollment.price = @enrollment.course.price
+    course = Course.friendly.find(params[:course])
 
-    respond_to do |format|
-      if @enrollment.save
-        format.html { redirect_to enrollment_url(@enrollment), notice: 'Enrollment was successfully created.' }
-        format.json { render :show, status: :created, location: @enrollment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @enrollment.errors, status: :unprocessable_entity }
-      end
+    if course.user == current_user
+      redirect_to course_path(course), notice: 'You can not enroll to your own course.'
+    elsif !course.price.zero?
+      redirect_to courses_path, notice: 'Paid courses are not available yet.'
+    else
+      current_user.buy_course(course)
+      redirect_to course_path(course), notice: 'You are enrolled!'
     end
   end
 
