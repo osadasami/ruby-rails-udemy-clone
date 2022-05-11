@@ -265,5 +265,21 @@ RSpec.describe EnrollmentsController, type: :request do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    describe '#update' do
+      it 'updates enrollment' do
+        patch enrollment_path(course_enrolled.enrollments.last), params: {enrollment: attributes_for(:enrollment, rating: 5, review: 'super good')}
+        expect(response).to redirect_to(enrollment_path(course_enrolled.enrollments.last))
+        expect(course_enrolled.enrollments.last.rating).to eq(5)
+        expect(course_enrolled.enrollments.last.review).to eq('super good')
+      end
+
+      it 'does not update not my enrollment' do
+        patch enrollment_path(course_not_my.enrollments.last), params: {enrollment: attributes_for(:enrollment, rating: 5, review: 'super good')}
+        expect(response).to redirect_to(root_path)
+        expect(course_not_my.enrollments.last.rating).not_to eq(5)
+        expect(course_not_my.enrollments.last.review).not_to eq('super good')
+      end
+    end
   end
 end
