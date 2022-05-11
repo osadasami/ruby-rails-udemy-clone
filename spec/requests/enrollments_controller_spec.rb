@@ -243,5 +243,16 @@ RSpec.describe EnrollmentsController, type: :request do
         end
       end
     end
+
+    describe '#show' do
+      it 'opens my enrollemt page' do
+        get enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to be_successful
+      end
+      it 'does not open not my enrollment page' do
+        get enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 end

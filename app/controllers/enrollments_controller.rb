@@ -20,7 +20,9 @@ class EnrollmentsController < ApplicationController
   end
 
   # GET /enrollments/1 or /enrollments/1.json
-  def show; end
+  def show
+    authorize @enrollment
+  end
 
   # GET /enrollments/new
   def new

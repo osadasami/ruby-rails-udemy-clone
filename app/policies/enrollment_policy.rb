@@ -5,6 +5,10 @@ class EnrollmentPolicy < ApplicationPolicy
     @user.has_role?(:admin) || @user.has_role?(:teacher) || @user.has_role?(:student)
   end
 
+  def show?
+    @user.has_role?(:admin) || @record.user == @user
+  end
+
   def edit?
     update?
   end
