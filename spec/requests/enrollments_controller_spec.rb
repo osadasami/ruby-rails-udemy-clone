@@ -134,6 +134,7 @@ RSpec.describe EnrollmentsController, type: :request do
         end
       end
     end
+
     describe '#show' do
       it 'opens enrollemt page' do
         get enrollment_path(course_enrolled.enrollments.last)
@@ -210,6 +211,35 @@ RSpec.describe EnrollmentsController, type: :request do
           expect(response).to redirect_to(course_path(course_created))
           follow_redirect!
           expect(response.body).to include('You can not enroll to your own course')
+        end
+      end
+    end
+
+    describe '#create' do
+      context 'free course' do
+        it 'creates new enrollment' do
+          post enrollments_path, params: {course: course_free.slug}
+          expect(response).to redirect_to(course_path(course_free))
+          follow_redirect!
+          expect(response.body).to include 'You are enrolled!'
+        end
+      end
+
+      context 'paid course' do
+        it 'redirects to courses page' do
+          post enrollments_path, params: {course: course.slug}
+          expect(response).to redirect_to(courses_path)
+          follow_redirect!
+          expect(response.body).to include 'Paid courses are not available yet.'
+        end
+      end
+
+      context 'my course' do
+        it 'redirects to course page' do
+          post enrollments_path, params: {course: course_created.slug}
+          expect(response).to redirect_to(course_path(course_created))
+          follow_redirect!
+          expect(response.body).to include 'You can not enroll to your own course.'
         end
       end
     end
