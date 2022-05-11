@@ -2,7 +2,7 @@
 
 class EnrollmentPolicy < ApplicationPolicy
   def index?
-    @user.has_role?(:admin)
+    @user.has_role?(:admin) || @user.has_role?(:teacher) || @user.has_role?(:student)
   end
 
   def edit?

@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe EnrollmentsController, type: :request do
   let(:enrollment) { create(:enrollment) }
   let(:admin) { create(:user, :admin) }
+  let(:teacher) { create(:user, :teacher) }
+  let(:student) { create(:user, :student) }
   let(:course) { create(:course) }
   let(:course_free) { create(:course, price: 0) }
 
@@ -61,8 +63,9 @@ RSpec.describe EnrollmentsController, type: :request do
   end
 
   context 'admin' do
-    let(:course_enrolled) { create(:course, :purchased, buyer: admin) }
-    let(:course_created) { create(:course, user: admin) }
+    let!(:course_enrolled) { create(:course, :purchased, buyer: admin) }
+    let!(:course_created) { create(:course, user: admin) }
+    let!(:course_not_my) { create(:course, :purchased, buyer: teacher, title: 'not my enrollment') }
 
     before do
       sign_in(admin)
@@ -72,6 +75,7 @@ RSpec.describe EnrollmentsController, type: :request do
       it 'opens page with all enrollments' do
         get enrollments_path
         expect(response).to be_successful
+        expect(response.body).to include(course_not_my.title)
       end
     end
 
@@ -155,6 +159,31 @@ RSpec.describe EnrollmentsController, type: :request do
         delete enrollment_path(course_enrolled.enrollments.last)
         expect(response).to redirect_to enrollments_path
         expect(course_enrolled.enrollments.count).to eq(0)
+      end
+    end
+  end
+
+  context 'teacher' do
+    let!(:course_enrolled) { create(:course, :purchased, buyer: teacher, title: 'My enrolled course') }
+    let!(:course_created) { create(:course, user: teacher) }
+    let!(:course_not_my) { create(:course, :purchased, buyer: admin, title: 'not my enrollment') }
+
+    before do
+      sign_in(teacher)
+    end
+
+    describe '#index' do
+      it 'opens page with my enrollments' do
+        get enrollments_path
+        expect(response).to be_successful
+      end
+      it 'shows only my enrollments' do
+        get enrollments_path
+        expect(response.body).to include(course_enrolled.title)
+      end
+      it 'does not show not my enrollments' do
+        get enrollments_path
+        expect(response.body).not_to include(course_not_my.title)
       end
     end
   end

@@ -6,19 +6,17 @@ class EnrollmentsController < ApplicationController
   # GET /enrollments or /enrollments.json
   def index
     @q = Enrollment.ransack(params[:q])
-    @pagy, @enrollments = pagy(@q.result.includes(:user))
+    if current_user.has_role?(:admin)
+      @pagy, @enrollments = pagy(@q.result.includes(:user))
+    else
+      @pagy, @enrollments = pagy(
+        @q
+          .result
+          .includes(:user)
+          .where(user: current_user)
+      )
+    end
     authorize @enrollments
-  end
-
-  def my
-    @q = Enrollment.ransack(params[:q])
-    @pagy, @enrollments = pagy(
-      @q.result
-        .includes(:user)
-        .joins(:course)
-          .where(course: { user: current_user })
-    )
-    render :index
   end
 
   # GET /enrollments/1 or /enrollments/1.json
