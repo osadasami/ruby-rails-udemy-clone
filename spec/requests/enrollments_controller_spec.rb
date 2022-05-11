@@ -186,5 +186,32 @@ RSpec.describe EnrollmentsController, type: :request do
         expect(response.body).not_to include(course_not_my.title)
       end
     end
+
+    describe '#new' do
+      context 'not enrolled' do
+        it 'opens page to create new enrollment' do
+          get new_enrollment_path(course: course)
+          expect(response).to be_successful
+        end
+      end
+
+      context 'already enrolled' do
+        it 'redirects to course page' do
+          get new_enrollment_path(course: course_enrolled)
+          expect(response).to redirect_to(course_path(course_enrolled))
+          follow_redirect!
+          expect(response.body).to include('You are already enrolled')
+        end
+      end
+
+      context 'my coursse' do
+        it 'redirect to course page' do
+          get new_enrollment_path(course: course_created)
+          expect(response).to redirect_to(course_path(course_created))
+          follow_redirect!
+          expect(response.body).to include('You can not enroll to your own course')
+        end
+      end
+    end
   end
 end
