@@ -254,5 +254,16 @@ RSpec.describe EnrollmentsController, type: :request do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    describe '#edit' do
+      it 'opens pages to edit my enrollment' do
+        get edit_enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to be_successful
+      end
+      it 'does not open pages to edit not my enrollment' do
+        get edit_enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 end
