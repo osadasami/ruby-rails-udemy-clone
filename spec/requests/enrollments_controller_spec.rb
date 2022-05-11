@@ -281,5 +281,152 @@ RSpec.describe EnrollmentsController, type: :request do
         expect(course_not_my.enrollments.last.review).not_to eq('super good')
       end
     end
+
+    describe '#destroy' do
+      it 'deletes my enrollment' do
+        delete enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to redirect_to enrollments_path
+        expect(course_enrolled.enrollments.count).to eq(0)
+      end
+
+      it 'does not delete not my enrollment' do
+        delete enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to root_path
+        expect(course_not_my.enrollments.count).to eq(1)
+      end
+    end
+  end
+
+  context 'student' do
+    let!(:course_enrolled) { create(:course, :purchased, buyer: student, title: 'My enrolled course') }
+    let!(:course_created) { create(:course, user: student) }
+    let!(:course_not_my) { create(:course, :purchased, buyer: admin, title: 'not my enrollment') }
+
+    before do
+      sign_in(student)
+    end
+
+    describe '#index' do
+      it 'opens page with my enrollments' do
+        get enrollments_path
+        expect(response).to be_successful
+      end
+      it 'shows only my enrollments' do
+        get enrollments_path
+        expect(response.body).to include(course_enrolled.title)
+      end
+      it 'does not show not my enrollments' do
+        get enrollments_path
+        expect(response.body).not_to include(course_not_my.title)
+      end
+    end
+
+    describe '#new' do
+      context 'not enrolled' do
+        it 'opens page to create new enrollment' do
+          get new_enrollment_path(course: course)
+          expect(response).to be_successful
+        end
+      end
+
+      context 'already enrolled' do
+        it 'redirects to course page' do
+          get new_enrollment_path(course: course_enrolled)
+          expect(response).to redirect_to(course_path(course_enrolled))
+          follow_redirect!
+          expect(response.body).to include('You are already enrolled')
+        end
+      end
+
+      context 'my coursse' do
+        it 'redirect to course page' do
+          get new_enrollment_path(course: course_created)
+          expect(response).to redirect_to(course_path(course_created))
+          follow_redirect!
+          expect(response.body).to include('You can not enroll to your own course')
+        end
+      end
+    end
+
+    describe '#create' do
+      context 'free course' do
+        it 'creates new enrollment' do
+          post enrollments_path, params: {course: course_free.slug}
+          expect(response).to redirect_to(course_path(course_free))
+          follow_redirect!
+          expect(response.body).to include 'You are enrolled!'
+        end
+      end
+
+      context 'paid course' do
+        it 'redirects to courses page' do
+          post enrollments_path, params: {course: course.slug}
+          expect(response).to redirect_to(courses_path)
+          follow_redirect!
+          expect(response.body).to include 'Paid courses are not available yet.'
+        end
+      end
+
+      context 'my course' do
+        it 'redirects to course page' do
+          post enrollments_path, params: {course: course_created.slug}
+          expect(response).to redirect_to(course_path(course_created))
+          follow_redirect!
+          expect(response.body).to include 'You can not enroll to your own course.'
+        end
+      end
+    end
+
+    describe '#show' do
+      it 'opens my enrollemt page' do
+        get enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to be_successful
+      end
+      it 'does not open not my enrollment page' do
+        get enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe '#edit' do
+      it 'opens pages to edit my enrollment' do
+        get edit_enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to be_successful
+      end
+      it 'does not open pages to edit not my enrollment' do
+        get edit_enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe '#update' do
+      it 'updates enrollment' do
+        patch enrollment_path(course_enrolled.enrollments.last), params: {enrollment: attributes_for(:enrollment, rating: 5, review: 'super good')}
+        expect(response).to redirect_to(enrollment_path(course_enrolled.enrollments.last))
+        expect(course_enrolled.enrollments.last.rating).to eq(5)
+        expect(course_enrolled.enrollments.last.review).to eq('super good')
+      end
+
+      it 'does not update not my enrollment' do
+        patch enrollment_path(course_not_my.enrollments.last), params: {enrollment: attributes_for(:enrollment, rating: 5, review: 'super good')}
+        expect(response).to redirect_to(root_path)
+        expect(course_not_my.enrollments.last.rating).not_to eq(5)
+        expect(course_not_my.enrollments.last.review).not_to eq('super good')
+      end
+    end
+
+    describe '#destroy' do
+      it 'deletes my enrollment' do
+        delete enrollment_path(course_enrolled.enrollments.last)
+        expect(response).to redirect_to enrollments_path
+        expect(course_enrolled.enrollments.count).to eq(0)
+      end
+
+      it 'does not delete not my enrollment' do
+        delete enrollment_path(course_not_my.enrollments.last)
+        expect(response).to redirect_to root_path
+        expect(course_not_my.enrollments.count).to eq(1)
+      end
+    end
   end
 end
