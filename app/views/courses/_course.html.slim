@@ -10,6 +10,8 @@ div id="#{dom_id course}" class="space-y-2"
     div= course.level
     div= number_to_currency(course.price)
     div= course.average_rating
+    div= course.lessons.count
+    div= course.enrollments_count
   div(class="prose")
     == course.description
 
